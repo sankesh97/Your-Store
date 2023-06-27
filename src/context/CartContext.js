@@ -9,7 +9,23 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartList, setCartList] = useState([]);
   const encodedToken = localStorage.getItem('token');
+  const [getCartTotals, setGetCartTotals] = useState({
+    totalPrice: '',
+    tax: '',
+    totalPriceBeforeTaxes: '',
+  });
   const navigate = useNavigate();
+
+  //  Cart Totals
+  const getTotal = (cartList) => {
+    const totalPrice = cartList.reduce(
+      (total, current) => total + current.price * current.qty,
+      0
+    );
+    const taxes = 0.18 * totalPrice;
+    const totalPriceBeforeTaxes = totalPrice - taxes;
+    setGetCartTotals({ totalPrice, taxes, totalPriceBeforeTaxes });
+  };
 
   // Fetching Inital Cart Details
   const fetchCartDetails = async () => {
@@ -19,6 +35,7 @@ export const CartProvider = ({ children }) => {
       });
       setCartList(response.data.cart);
       console.log(response.data.cart);
+      getTotal(response.data.cart);
     } catch (err) {
       console.log(err);
     }
@@ -100,6 +117,7 @@ export const CartProvider = ({ children }) => {
         deleteCart,
         incrementCart,
         addToCartHandler,
+        getCartTotals,
       }}
     >
       {children}
