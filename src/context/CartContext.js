@@ -1,11 +1,15 @@
 import axios from 'axios';
 import { createContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import toaster from './Toaster';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartList, setCartList] = useState([]);
   const encodedToken = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   // Fetching Inital Cart Details
   const fetchCartDetails = async () => {
@@ -20,7 +24,22 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Add to Cart
+  const addToCartHandler = (product) => {
+    console.log(product);
+    if (localStorage.getItem('token')) {
+      if (cartList.filter((items) => items._id === product._id).length) {
+        incrementCart(product);
+      } else {
+        addToCart(product);
+        toaster('SUCCESS', `${product.title} has been added to the cart`);
+      }
+    } else {
+      toaster('ERROR', 'Please Login to add to cart');
+      navigate('/login');
+    }
+  };
+
+  // Add to Cart Call
   const addToCart = async (addedProduct) => {
     if (!cartList.find((e) => e._id === addedProduct._id)) {
       try {
@@ -43,14 +62,15 @@ export const CartProvider = ({ children }) => {
   };
 
   // Increment Cart
-  const incrementCart = async (product) => {
+  const incrementCart = async ({ _id: productId }) => {
     try {
-      const response = await axios.post(`/api/user/cart/${product._id}`, {
-        data: {
-          action: { type: 'increment' },
-        },
-        headers: { authorization: encodedToken },
-      });
+      const response = await axios.post(
+        `/api/user/cart/${productId}`,
+        { action: { type: 'increment' } },
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
       setCartList(response.data.cart);
       console.log(cartList);
     } catch (err) {
@@ -60,18 +80,12 @@ export const CartProvider = ({ children }) => {
 
   // Delete Cart
   const deleteCart = async (product) => {
-    console.log(product._id);
     try {
-      const response = await fetch('/api/user/cart/' + product._id, {
-        method: 'DELETE',
+      const response = await axios.delete(`/api/user/cart/${product._id}`, {
         headers: { authorization: encodedToken },
       });
-      // const response = await axios.delete(`/api/user/cart/${product._id}`, {
-      //   headers: { authorization: encodedToken },
-      // });
-      const data = await response.json();
-      console.log(data);
-      setCartList(data.cart);
+
+      setCartList(response.data.cart);
     } catch (err) {
       console.log(err);
     }
@@ -85,6 +99,7 @@ export const CartProvider = ({ children }) => {
         addToCart,
         deleteCart,
         incrementCart,
+        addToCartHandler,
       }}
     >
       {children}

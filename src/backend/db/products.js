@@ -5,7 +5,7 @@
 
 export const products = [
   {
-    _id: 1001,
+    _id: '1001',
     title: 'Dell XPS 13',
     description:
       'The Dell XPS 13 is a sleek and powerful laptop with a beautiful display and long battery life.',
@@ -17,7 +17,7 @@ export const products = [
     rating: 5,
   },
   {
-    _id: 1002,
+    _id: '1002',
     title: 'Apple MacBook Pro 16-inch',
     description:
       'The Apple MacBook Pro 16-inch is a powerful laptop with a stunning Retina display and up to 64GB of RAM.',
@@ -29,7 +29,7 @@ export const products = [
     rating: 5,
   },
   {
-    _id: 1003,
+    _id: '1003',
     title: 'HP Spectre x360',
     description:
       'The HP Spectre x360 is a versatile laptop with a 360-degree hinge and long battery life.',
@@ -41,7 +41,7 @@ export const products = [
     rating: 5,
   },
   {
-    _id: 1004,
+    _id: '1004',
     rating: 5,
     title: 'Lenovo ThinkPad X1 Carbon',
     description:
@@ -53,7 +53,7 @@ export const products = [
     Storage: 1024,
   },
   {
-    _id: 1005,
+    _id: '1005',
     rating: 5,
     title: 'ASUS ROG Zephyrus G14',
     description:
@@ -65,7 +65,7 @@ export const products = [
     Storage: 512,
   },
   {
-    _id: 1006,
+    _id: '1006',
     rating: 5,
     title: 'Acer Swift 5',
     description:
@@ -77,7 +77,7 @@ export const products = [
     Storage: 512,
   },
   {
-    _id: 1007,
+    _id: '1007',
     rating: 5,
     title: 'Microsoft Surface Laptop 4',
     description:
@@ -89,7 +89,7 @@ export const products = [
     Storage: 512,
   },
   {
-    _id: 1008,
+    _id: '1008',
     rating: 4,
     title: 'Dell Inspiron 15 7000',
     description:
@@ -101,7 +101,7 @@ export const products = [
     Storage: 1024,
   },
   {
-    _id: 1009,
+    _id: '1009',
     rating: 4,
     title: 'HP Envy 13',
     description:
@@ -113,7 +113,7 @@ export const products = [
     Storage: 512,
   },
   {
-    _id: 1010,
+    _id: '1010',
     rating: 4,
     title: 'Asus VivoBook S14',
     description:
@@ -125,7 +125,7 @@ export const products = [
     Storage: 512,
   },
   {
-    _id: 1011,
+    _id: '1011',
     rating: 5,
     title: 'Apple iPhone 13',
     description:
@@ -137,7 +137,7 @@ export const products = [
     Storage: 128,
   },
   {
-    _id: 1012,
+    _id: '1012',
     rating: 4,
     title: 'Samsung Galaxy S21',
     description:
@@ -149,7 +149,7 @@ export const products = [
     Storage: 128,
   },
   {
-    _id: 1013,
+    _id: '1013',
     rating: 3,
     title: 'OnePlus 9 Pro',
     description:
@@ -161,7 +161,7 @@ export const products = [
     Storage: 256,
   },
   {
-    _id: 1014,
+    _id: '1014',
     rating: 3,
     title: 'Xiaomi Mi 11X',
     description:
@@ -173,7 +173,7 @@ export const products = [
     Storage: 128,
   },
   {
-    _id: 1015,
+    _id: '1015',
     rating: 3,
     title: 'Realme Narzo 30 Pro',
     description:
@@ -185,7 +185,7 @@ export const products = [
     Storage: 64,
   },
   {
-    _id: 1016,
+    _id: '1016',
     rating: 5,
     title: 'Google Pixel 6',
     description:
@@ -197,7 +197,7 @@ export const products = [
     Storage: 128,
   },
   {
-    _id: 1017,
+    _id: '1017',
     rating: 5,
     title: 'Apple iPhone SE (2020)',
     description:
@@ -209,7 +209,7 @@ export const products = [
     Storage: 64,
   },
   {
-    _id: 1018,
+    _id: '1018',
     rating: 5,
     title: 'Samsung Galaxy A52s 5G',
     description:
@@ -221,7 +221,7 @@ export const products = [
     Storage: 128,
   },
   {
-    _id: 1019,
+    _id: '1019',
     rating: 4,
     title: 'OnePlus Nord 2',
     description:
@@ -233,7 +233,7 @@ export const products = [
     Storage: 128,
   },
   {
-    _id: 1020,
+    _id: '1020',
     rating: 3,
     title: 'Xiaomi Redmi Note 11 Pro',
     description:
@@ -245,7 +245,7 @@ export const products = [
     Storage: 128,
   },
   {
-    _id: 1021,
+    _id: '1021',
     rating: 5,
     title: 'Sony Bravia XR A90J',
     description:
@@ -258,7 +258,7 @@ export const products = [
     'Highest Resolution supported': '4K',
   },
   {
-    _id: 1022,
+    _id: '1022',
     rating: 4,
     title: 'Samsung QN90A Neo QLED',
     description:
@@ -271,7 +271,7 @@ export const products = [
     'Highest Resolution supported': '4K',
   },
   {
-    _id: 1023,
+    _id: '1023',
     rating: 3,
     title: 'LG CX Series OLED',
     description:
@@ -284,7 +284,7 @@ export const products = [
     'Highest Resolution supported': '4K',
   },
   {
-    _id: 1024,
+    _id: '1024',
     rating: 5,
     title: 'TCL 6-Series QLED',
     description:
@@ -297,7 +297,7 @@ export const products = [
     'Highest Resolution supported': '4K',
   },
   {
-    _id: 1025,
+    _id: '1025',
     rating: 4,
     title: 'OnePlus TV U1S',
     description:
@@ -310,7 +310,7 @@ export const products = [
     'Highest Resolution supported': '4K',
   },
   {
-    _id: 1026,
+    _id: '1026',
     rating: 3,
     title: 'Sony X90J',
     description:
@@ -323,7 +323,7 @@ export const products = [
     'Highest Resolution supported': '4K',
   },
   {
-    _id: 1027,
+    _id: '1027',
     rating: 5,
     title: 'Samsung AU8000 Crystal UHD',
     description:
@@ -336,7 +336,7 @@ export const products = [
     'Highest Resolution supported': '4K',
   },
   {
-    _id: 1028,
+    _id: '1028',
     rating: 4,
     title: 'LG NANO81 Series',
     description:
@@ -349,7 +349,7 @@ export const products = [
     'Highest Resolution supported': '4K',
   },
   {
-    _id: 1029,
+    _id: '1029',
     rating: 3,
     title: 'VIZIO M-Series Quantum',
     description:
@@ -362,7 +362,7 @@ export const products = [
     'Highest Resolution supported': '4K',
   },
   {
-    _id: 1030,
+    _id: '1030',
     rating: 5,
     title: 'Hisense U7G Series',
     description:

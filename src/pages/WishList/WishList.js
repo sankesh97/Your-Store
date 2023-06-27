@@ -1,10 +1,12 @@
 import { useContext, useEffect } from 'react';
-import { WishListContext } from '../../context/AppContext';
+import { CartContext, WishListContext } from '../../context/AppContext';
 import { NavLink } from 'react-router-dom';
 
 const WishList = () => {
   const { fetchWishList, wishList, deleteWishList } =
     useContext(WishListContext);
+  const { addToCartHandler } = useContext(CartContext);
+
   useEffect(() => {
     fetchWishList();
   }, [fetchWishList]);
@@ -44,7 +46,12 @@ const WishList = () => {
                     </div>
                     <div className='col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2'>
                       <div className='float-md-end g-2'>
-                        <span className='btn btn-light border px-2 icon-hover-primary'>
+                        <span
+                          className='btn btn-light border px-2 icon-hover-primary'
+                          onClick={() => {
+                            addToCartHandler(product);
+                          }}
+                        >
                           Add to Cart
                         </span>
                         <span

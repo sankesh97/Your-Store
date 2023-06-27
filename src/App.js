@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
-
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 import Header from './components/Header/Header';
@@ -16,6 +16,8 @@ import Checkout from './pages/Checkout/Checkout';
 import WishList from './pages/WishList/WishList';
 import Login from './pages/Authentication/Login';
 import Register from './pages/Authentication/Register';
+import { ToastContainer } from 'react-toastify';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
       <footer>
         <Footer />
       </footer>
+      <ToastContainer />
+      <ScrollToTop />
     </>
   );
 }

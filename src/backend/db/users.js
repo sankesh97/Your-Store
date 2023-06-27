@@ -15,5 +15,6 @@ export const users = [
     password: 'sankesh97',
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    wishlist: [],
   },
 ];

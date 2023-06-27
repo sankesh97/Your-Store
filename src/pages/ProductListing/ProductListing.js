@@ -13,7 +13,7 @@ const ProductListing = () => {
   // Context Files
   const { productList, fetchProducts } = useContext(ProductContext);
   const { categoryList, fetchCategories } = useContext(CategoryContext);
-  const { addToCart, cartList, incrementCart } = useContext(CartContext);
+  const { addToCartHandler } = useContext(CartContext);
   const { addWishList } = useContext(WishListContext);
 
   // Local states
@@ -252,19 +252,12 @@ const ProductListing = () => {
                           <div className='col-xl-3 col-md-4 d-flex justify-content-center'>
                             <div className='bg-image hover-zoom ripple rounded ripple-surface me-md-3 mb-3 mb-md-0'>
                               <NavLink to={`/products/${product._id}`}>
-                                <img src={product.imageURL} className='w-100' />
+                                <img
+                                  src={product.imageURL}
+                                  alt={product.title}
+                                  className='w-100'
+                                />
                               </NavLink>
-                              <a>
-                                <div className='hover-overlay'>
-                                  <div
-                                    className='mask'
-                                    style={{
-                                      backgroundColor:
-                                        'rgba(253, 253, 253, 0.15)',
-                                    }}
-                                  ></div>
-                                </div>
-                              </a>
                             </div>
                           </div>
                           <div className='col-xl-6 col-md-5 col-sm-7'>
@@ -295,23 +288,19 @@ const ProductListing = () => {
                                 className='btn btn-primary shadow-0 mx-2'
                                 type='button'
                                 onClick={() => {
-                                  cartList.filter(
-                                    (items) => items._id === product._id
-                                  ).length
-                                    ? incrementCart(product)
-                                    : addToCart(product);
+                                  addToCartHandler(product);
                                 }}
                               >
                                 Add To Cart
                               </button>
-                              <a
+                              <span
                                 onClick={() => {
                                   addWishList(product);
                                 }}
                                 className='btn btn-light border mx-2 pt-2 icon-hover'
                               >
                                 <i className='bi bi-heart px-1'></i>
-                              </a>
+                              </span>
                             </div>
                           </div>
                         </div>
