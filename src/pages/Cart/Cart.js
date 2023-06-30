@@ -8,6 +8,7 @@ const Cart = () => {
   useEffect(() => {
     fetchCartDetails();
   }, []);
+
   return (
     <>
       {/* <!-- cart + summary --> */}
@@ -96,33 +97,41 @@ const Cart = () => {
                   <div className='d-flex justify-content-between'>
                     <p className='mb-2'>Total price:</p>
                     <p className='mb-2'>
-                      {getCartTotals.totalPriceBeforeTaxes.toLocaleString(
-                        'en-IN'
-                      )}
+                      {getCartTotals.totalPriceBeforeTaxes
+                        ? getCartTotals.totalPriceBeforeTaxes.toLocaleString(
+                            'en-IN'
+                          )
+                        : '0'}
                     </p>
                   </div>
 
                   <div className='d-flex justify-content-between'>
                     <p className='mb-2'>Tax:</p>
                     <p className='mb-2'>
-                      {getCartTotals.taxes.toLocaleString('en-IN')}
+                      {getCartTotals.taxes
+                        ? getCartTotals.taxes.toLocaleString('en-IN')
+                        : '0'}
                     </p>
                   </div>
                   <hr />
                   <div className='d-flex justify-content-between'>
                     <p className='mb-2'>Total price:</p>
                     <p className='mb-2 fw-bold'>
-                      {getCartTotals.totalPrice.toLocaleString('en-IN')}
+                      {getCartTotals.totalPrice
+                        ? getCartTotals.totalPrice.toLocaleString('en-IN')
+                        : '0'}
                     </p>
                   </div>
 
                   <div className='mt-3'>
-                    <button className='btn btn-success w-100 shadow-0 mb-2'>
-                      {' '}
-                      Make Purchase{' '}
-                    </button>
-                    <NavLink to={`/shop`}>
-                      <button className='btn btn-success w-100 shadow-0 mb-2'>
+                    <NavLink to={`/checkout`}>
+                      <button className='btn btn-primary w-100 shadow-0 mb-2'>
+                        {' '}
+                        Checkout{' '}
+                      </button>
+                    </NavLink>
+                    <NavLink to={`/products`}>
+                      <button className='btn btn-primary w-100 shadow-0 mb-2'>
                         <i class='bi bi-backspace'></i> Back to shop
                       </button>{' '}
                     </NavLink>

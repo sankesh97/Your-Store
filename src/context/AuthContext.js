@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [encodedToken, setEncodedToken] = useState();
+  const [loggedInUser, setLoggedInUser] = useState();
   const navigate = useNavigate();
 
   const registerHandler = async () => {
@@ -16,8 +17,9 @@ export const AuthProvider = ({ children }) => {
         email: 'adarshbalika@neog.camp',
         password: 'adarshBalika',
       });
-      // saving the encodedToken in the localStorage
+      setLoggedInUser(response.data.foundUser);
       localStorage.setItem('token', response.data.encodedToken);
+      console.log(loggedInUser);
     } catch (error) {
       console.log(error);
     }
@@ -26,11 +28,12 @@ export const AuthProvider = ({ children }) => {
   const loginHandler = async (event, email, password) => {
     event.preventDefault();
     try {
-      console.log(email, password);
       const response = await axios.post('/api/auth/login', { email, password });
-      console.log(response.data.encodedToken);
+      console.log(response.data);
+      setLoggedInUser(response.data.foundUser);
       setEncodedToken(response.data.encodedToken);
       localStorage.setItem('token', response.data.encodedToken);
+      console.log(loggedInUser);
       navigate('/');
     } catch (err) {
       console.log(err.response);
@@ -44,7 +47,13 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ encodedToken, loginHandler, registerHandler, logoutHandler }}
+      value={{
+        encodedToken,
+        loginHandler,
+        registerHandler,
+        logoutHandler,
+        loggedInUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

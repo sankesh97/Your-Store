@@ -1,4 +1,17 @@
+import { useContext, useEffect } from 'react';
+import { CartContext } from '../../context/CartContext';
+import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../context/AppContext';
+
 const Checkout = () => {
+  const { fetchCartDetails, cartList, deleteCart, getCartTotals } =
+    useContext(CartContext);
+  const { loggedInUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    fetchCartDetails();
+  }, []);
+
   return (
     <section className='bg-light py-5'>
       <div className='container'>
@@ -15,6 +28,7 @@ const Checkout = () => {
                       <input
                         type='text'
                         id='typeText'
+                        value={loggedInUser.firstName}
                         placeholder='Type here'
                         className='form-control'
                       />
@@ -27,6 +41,7 @@ const Checkout = () => {
                       <input
                         type='text'
                         id='typeText'
+                        value={loggedInUser.lastName}
                         placeholder='Type here'
                         className='form-control'
                       />
@@ -39,7 +54,7 @@ const Checkout = () => {
                       <input
                         type='tel'
                         id='typePhone'
-                        value='+48 '
+                        value='+91 '
                         className='form-control'
                       />
                     </div>
@@ -51,26 +66,12 @@ const Checkout = () => {
                       <input
                         type='email'
                         id='typeEmail'
+                        value={loggedInUser.email}
                         placeholder='example@gmail.com'
                         className='form-control'
                       />
                     </div>
                   </div>
-                </div>
-
-                <div className='form-check'>
-                  <input
-                    className='form-check-input'
-                    type='checkbox'
-                    value=''
-                    id='flexCheckDefault'
-                  />
-                  <label
-                    className='form-check-label'
-                    htmlFor='flexCheckDefault'
-                  >
-                    Keep me up to date on news
-                  </label>
                 </div>
 
                 <hr className='my-4' />
@@ -92,9 +93,9 @@ const Checkout = () => {
                           className='form-check-label'
                           htmlFor='flexRadioDefault1'
                         >
-                          Express delivery <br />
+                          Express Shipping <br />
                           <small className='text-muted'>
-                            3-4 days via Fedex{' '}
+                            Next - Day Delivery{' '}
                           </small>
                         </label>
                       </div>
@@ -114,10 +115,8 @@ const Checkout = () => {
                           className='form-check-label'
                           htmlFor='flexRadioDefault2'
                         >
-                          Post office <br />
-                          <small className='text-muted'>
-                            20-30 days via post{' '}
-                          </small>
+                          Regular Shipping <br />
+                          <small className='text-muted'>3-4 days </small>
                         </label>
                       </div>
                     </div>
@@ -244,20 +243,34 @@ const Checkout = () => {
               <h6 className='mb-3'>Summary</h6>
               <div className='d-flex justify-content-between'>
                 <p className='mb-2'>Total price:</p>
-                <p className='mb-2'>$195.90</p>
+                <p className='mb-2'>
+                  {getCartTotals.totalPriceBeforeTaxes
+                    ? getCartTotals.totalPriceBeforeTaxes.toLocaleString(
+                        'en-IN'
+                      )
+                    : '0'}
+                </p>
               </div>
               <div className='d-flex justify-content-between'>
-                <p className='mb-2'>Discount:</p>
-                <p className='mb-2 text-danger'>- $60.00</p>
+                <p className='mb-2'>Shipping:</p>
+                <p className='mb-2 text-success'>Free</p>
               </div>
               <div className='d-flex justify-content-between'>
-                <p className='mb-2'>Shipping cost:</p>
-                <p className='mb-2'>+ $14.00</p>
+                <p className='mb-2'>Taxes:</p>
+                <p className='mb-2'>
+                  {getCartTotals.taxes
+                    ? getCartTotals.taxes.toLocaleString('en-IN')
+                    : '0'}
+                </p>
               </div>
               <hr />
               <div className='d-flex justify-content-between'>
                 <p className='mb-2'>Total price:</p>
-                <p className='mb-2 fw-bold'>$149.90</p>
+                <p className='mb-2 fw-bold'>
+                  {getCartTotals.totalPrice
+                    ? getCartTotals.totalPrice.toLocaleString('en-IN')
+                    : '0'}
+                </p>
               </div>
 
               <div className='input-group mt-3 mb-4'>
@@ -274,65 +287,37 @@ const Checkout = () => {
 
               <hr />
               <h6 className='text-dark my-4'>Items in cart</h6>
-
-              <div className='d-flex align-items-center mb-4'>
-                <div className='me-3 position-relative'>
-                  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary'>
-                    1
-                  </span>
-                  <img
-                    src='https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/7.webp'
-                    style={{ height: '96px', width: '96x' }}
-                    className='img-sm rounded border'
-                  />
-                </div>
-                <div className=''>
-                  <a href='#' className='nav-link'>
-                    Gaming Headset with Mic <br />
-                    Darkblue color
-                  </a>
-                  <div className='price text-muted'>Total: $295.99</div>
-                </div>
-              </div>
-
-              <div className='d-flex align-items-center mb-4'>
-                <div className='me-3 position-relative'>
-                  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary'>
-                    1
-                  </span>
-                  <img
-                    src='https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/5.webp'
-                    style={{ height: '96px', width: '96x' }}
-                    className='img-sm rounded border'
-                  />
-                </div>
-                <div className=''>
-                  <a href='#' className='nav-link'>
-                    Apple Watch Series 4 Space <br />
-                    Large size
-                  </a>
-                  <div className='price text-muted'>Total: $217.99</div>
-                </div>
-              </div>
-
-              <div className='d-flex align-items-center mb-4'>
-                <div className='me-3 position-relative'>
-                  <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary'>
-                    3
-                  </span>
-                  <img
-                    src='https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/1.webp'
-                    style={{ height: '96px', width: '96x' }}
-                    className='img-sm rounded border'
-                  />
-                </div>
-                <div className=''>
-                  <a href='#' className='nav-link'>
-                    GoPro HERO6 4K Action Camera - Black
-                  </a>
-                  <div className='price text-muted'>Total: $910.00</div>
-                </div>
-              </div>
+              {cartList ? (
+                cartList.map((product) => (
+                  <div
+                    key={product._id}
+                    className='d-flex align-items-center mb-4'
+                  >
+                    <div className='me-3 position-relative'>
+                      <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary'>
+                        1
+                      </span>
+                      <img
+                        src={product.imageURL}
+                        style={{ height: '96px', width: '96x' }}
+                        className='img-sm rounded border'
+                        alt={product.title}
+                      />
+                    </div>
+                    <div className=''>
+                      <Link href='#' className='nav-link'>
+                        {product.title}
+                      </Link>
+                      <div className='price text-muted '>
+                        Total:{' '}
+                        {(product.qty * product.price).toLocaleString('en-IN')}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>There is some error processing you request</p>
+              )}
             </div>
           </div>
         </div>

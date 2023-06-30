@@ -34,7 +34,6 @@ export const CartProvider = ({ children }) => {
         headers: { authorization: encodedToken },
       });
       setCartList(response.data.cart);
-      console.log(response.data.cart);
       getTotal(response.data.cart);
     } catch (err) {
       console.log(err);
@@ -44,8 +43,8 @@ export const CartProvider = ({ children }) => {
   const addToCartHandler = (product) => {
     console.log(product);
     if (localStorage.getItem('token')) {
-      if (cartList.filter((items) => items._id === product._id).length) {
-        incrementCart(product);
+      if (cartList.find((item) => item._id === product._id)) {
+        navigate('/cart');
       } else {
         addToCart(product);
         toaster('SUCCESS', `${product.title} has been added to the cart`);
@@ -103,6 +102,7 @@ export const CartProvider = ({ children }) => {
       });
 
       setCartList(response.data.cart);
+      getTotal(response.data.cart);
     } catch (err) {
       console.log(err);
     }

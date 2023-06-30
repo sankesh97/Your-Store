@@ -6,6 +6,7 @@ import {
   WishListContext,
 } from '../../context/AppContext';
 import { NavLink, useParams } from 'react-router-dom';
+import toaster from '../../context/Toaster';
 
 const ProductListing = () => {
   const { categoriesSelection } = useParams();
@@ -13,7 +14,7 @@ const ProductListing = () => {
   // Context Files
   const { productList, fetchProducts } = useContext(ProductContext);
   const { categoryList, fetchCategories } = useContext(CategoryContext);
-  const { addToCartHandler } = useContext(CartContext);
+  const { addToCartHandler, cartList } = useContext(CartContext);
   const { addWishList } = useContext(WishListContext);
 
   // Local states
@@ -37,6 +38,7 @@ const ProductListing = () => {
     setSortProduct('');
     setshowCategories([]);
     setRating(0);
+    toaster('SUCCESS', 'Filters have been cleared');
   };
 
   useEffect(() => {
@@ -291,7 +293,9 @@ const ProductListing = () => {
                                   addToCartHandler(product);
                                 }}
                               >
-                                Add To Cart
+                                {cartList.find(({ _id }) => _id === product._id)
+                                  ? 'Go To Cart'
+                                  : 'Add To Cart'}
                               </button>
                               <span
                                 onClick={() => {
