@@ -16,5 +16,15 @@ export const users = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
     wishlist: [],
+    address: [
+      {
+        id: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
+        streetAddress: 'Anjani Towers',
+        city: 'Hyderabad',
+        house: '110',
+        postal: '500016',
+        phone: '0987654321',
+      },
+    ],
   },
 ];

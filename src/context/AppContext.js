@@ -3,6 +3,7 @@ import { AuthProvider, AuthContext } from './AuthContext';
 import { ProductContext, ProductProvider } from './ProductContext';
 import { CategoryContext, CategoryProvider } from './CategoryContext';
 import { WishListContext, WishListProvider } from './WishListContext';
+import { CheckoutProvider } from './CheckoutContext';
 export {
   CartContext,
   ProductContext,
@@ -17,7 +18,9 @@ const AppContext = ({ children }) => {
       <CartProvider>
         <ProductProvider>
           <CategoryProvider>
-            <WishListProvider>{children}</WishListProvider>
+            <WishListProvider>
+              <CheckoutProvider>{children}</CheckoutProvider>
+            </WishListProvider>
           </CategoryProvider>
         </ProductProvider>
       </CartProvider>

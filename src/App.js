@@ -1,3 +1,4 @@
+// External Imports
 import { Routes, Route } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,6 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
+// Internal Imports
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
@@ -19,6 +21,9 @@ import Login from './pages/Authentication/Login';
 import Register from './pages/Authentication/Register';
 import { ToastContainer } from 'react-toastify';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import { RequiresAuth } from './components/RequiresAuth';
+import Account from './pages/Authentication/Account';
+import OrderSummary from './pages/OrderSummary/OrderSummary';
 
 function App() {
   return (
@@ -36,9 +41,46 @@ function App() {
             path='/products/category/:categoriesSelection'
             element={<ProductListing />}
           />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/wishlist' element={<WishList />} />
-          <Route path='/checkout' element={<Checkout />} />
+          <Route
+            path='/cart'
+            element={
+              <RequiresAuth>
+                <Cart />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path='/wishlist'
+            element={
+              <RequiresAuth>
+                <WishList />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path='/checkout'
+            element={
+              <RequiresAuth>
+                x<Checkout />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path='/account'
+            element={
+              <RequiresAuth>
+                <Account />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path='orderSummary'
+            element={
+              <RequiresAuth>
+                <OrderSummary />
+              </RequiresAuth>
+            }
+          />
           <Route path='/products/:productId' element={<SingleProduct />} />
           <Route path='/mockman' element={<MockAPI />} />
         </Routes>

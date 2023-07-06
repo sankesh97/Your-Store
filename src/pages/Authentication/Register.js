@@ -15,15 +15,15 @@ const Register = () => {
       <Card>
         <h3>Register</h3>
         <form
-          onSubmit={(event) =>
+          onSubmit={(event) => {
             registerHandler(
               event,
               email.current.value,
               password.current.value,
               firstName.current.value,
               lastName.current.value
-            )
-          }
+            );
+          }}
         >
           <div className='mb-3'>
             <label htmlFor='firstName' className='form-label'>
@@ -66,9 +66,7 @@ const Register = () => {
               placeholder='Enter your Email'
               required
             />
-            <div id='emailHelp' className='form-text'>
-              We&apos;ll never share your email with anyone else.
-            </div>
+            <div id='emailHelp' className='form-text'></div>
           </div>
 
           <div className='mb-3'>
@@ -92,7 +90,7 @@ const Register = () => {
             <input
               type='password'
               className='form-control'
-              id='loginPassword'
+              id='confirmPassword'
               placeholder='Confirm your password'
               ref={password}
               required

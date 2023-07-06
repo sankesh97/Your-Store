@@ -10,7 +10,7 @@ const Header = () => {
     <>
       <header>
         <nav className='navbar navbar-expand-lg bg-dark text-white'>
-          <div className='container py-2'>
+          <div className='container py-2 '>
             <NavLink className='navbar-brand text-white' to='/'>
               <img src={logo} alt='logo' style={{ maxWidth: '200px' }} />
             </NavLink>
@@ -30,7 +30,7 @@ const Header = () => {
               className='collapse navbar-collapse'
               id='navbarSupportedContent'
             >
-              <form className='d-flex me-auto' role='search'>
+              <form className='d-flex mx-auto' role='search'>
                 <input
                   className='form-control me-2'
                   type='search'
@@ -41,34 +41,38 @@ const Header = () => {
                   Search
                 </button>
               </form>
-
-              <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
-                <li className='nav-item'>
-                  <NavLink className='text-white' to='/products'>
-                    <i className='bi bi-person-circle fs-4 mx-2'></i>
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink className='text-white' to='/wishlist'>
-                    <i className='bi bi-person-heart fs-4 mx-2'></i>
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink className='text-white' to='/cart'>
-                    <i className='bi bi-bag fs-4 mx-2'></i>
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  {localStorage.getItem('token') ? (
-                    <span onClick={() => logoutHandler()}>Logout</span>
-                  ) : (
-                    <NavLink className='text-white' to='/login'>
-                      Login/Register
-                    </NavLink>
-                  )}
-                </li>
-              </ul>
             </div>
+            <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
+              <li className='nav-item'>
+                <NavLink className='text-white' to='/products'>
+                  <i className='bi bi-shop fs-4 mx-2'></i>
+                </NavLink>
+              </li>
+              <li className='nav-item'>
+                <NavLink className='text-white' to='/account'>
+                  <i className='bi bi-person-circle fs-4 mx-2'></i>
+                </NavLink>
+              </li>
+              <li className='nav-item'>
+                <NavLink className='text-white' to='/wishlist'>
+                  <i className='bi bi-person-heart fs-4 mx-2'></i>
+                </NavLink>
+              </li>
+              <li className='nav-item'>
+                <NavLink className='text-white' to='/cart'>
+                  <i className='bi bi-bag fs-4 mx-2'></i>
+                </NavLink>
+              </li>
+              <li className='nav-item btn btn-primary'>
+                {sessionStorage.getItem('token') ? (
+                  <span onClick={() => logoutHandler()}>Logout</span>
+                ) : (
+                  <NavLink className='text-white' to='/login'>
+                    Login/Register
+                  </NavLink>
+                )}
+              </li>
+            </ul>
           </div>
         </nav>
       </header>

@@ -1,25 +1,30 @@
 import axios from 'axios';
 import { createContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import toaster from './Toaster';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [encodedToken, setEncodedToken] = useState();
   const [loggedInUser, setLoggedInUser] = useState();
-  const navigate = useNavigate();
 
-  const registerHandler = async () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const registerHandler = async (firstName, lastName, email, password) => {
     try {
       const response = await axios.post(`/api/auth/signup`, {
-        firstName: 'Adarsh',
-        lastName: 'Balika',
-        email: 'adarshbalika@neog.camp',
-        password: 'adarshBalika',
+        firstName,
+        lastName,
+        email,
+        password,
       });
       setLoggedInUser(response.data.foundUser);
-      localStorage.setItem('token', response.data.encodedToken);
-      console.log(loggedInUser);
+      sessionStorage.setItem('token', response.data.encodedToken);
+      sessionStorage.setItem('user', response.data.foundUser);
+      navigate(location?.state?.from?.pathname);
+      toaster('SUCCESS', "You've Been Registered Successfully");
     } catch (error) {
       console.log(error);
     }
@@ -29,20 +34,61 @@ export const AuthProvider = ({ children }) => {
     event.preventDefault();
     try {
       const response = await axios.post('/api/auth/login', { email, password });
-      console.log(response.data);
       setLoggedInUser(response.data.foundUser);
       setEncodedToken(response.data.encodedToken);
-      localStorage.setItem('token', response.data.encodedToken);
-      console.log(loggedInUser);
-      navigate('/');
+      sessionStorage.setItem('user', JSON.stringify(response.data.foundUser));
+      sessionStorage.setItem('token', response.data.encodedToken);
+      navigate(location?.state?.from?.pathname);
+      toaster('SUCCESS', "You've Been Logged In Successfully");
     } catch (err) {
       console.log(err.response);
     }
   };
 
   const logoutHandler = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     navigate('/');
+    toaster('SUCCESS', "You've Been Logged Out Successfully");
+  };
+
+  const addressHandler = (currentAddress) => {
+    console.log(currentAddress);
+    setLoggedInUser(() => {
+      const temp = { ...JSON.parse(sessionStorage.getItem('user')) };
+      const tempAddress = [...temp.address];
+      if (currentAddress.id.length) {
+        sessionStorage.setItem(
+          'user',
+          JSON.stringify({
+            ...temp,
+            address: [
+              ...tempAddress.filter((item) => item.id !== currentAddress.id),
+              currentAddress,
+            ],
+          })
+        );
+        return {
+          ...temp,
+          address: [
+            ...tempAddress.filter((item) => item.id !== currentAddress.id),
+            currentAddress,
+          ],
+        };
+      } else {
+        sessionStorage.setItem(
+          'user',
+          JSON.stringify({
+            ...temp,
+            address: [...tempAddress, currentAddress],
+          })
+        );
+        return {
+          ...temp,
+          address: [...tempAddress, currentAddress],
+        };
+      }
+    });
   };
 
   return (
@@ -53,6 +99,7 @@ export const AuthProvider = ({ children }) => {
         registerHandler,
         logoutHandler,
         loggedInUser,
+        addressHandler,
       }}
     >
       {children}

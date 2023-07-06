@@ -3,8 +3,14 @@ import { CartContext } from '../../context/AppContext';
 import { NavLink } from 'react-router-dom';
 
 const Cart = () => {
-  const { fetchCartDetails, cartList, deleteCart, getCartTotals } =
-    useContext(CartContext);
+  const {
+    fetchCartDetails,
+    cartList,
+    deleteCart,
+    getCartTotals,
+    incrementCart,
+    decrementCart,
+  } = useContext(CartContext);
   useEffect(() => {
     fetchCartDetails();
   }, []);
@@ -23,7 +29,7 @@ const Cart = () => {
                   {cartList.length > 0 ? (
                     cartList.map((product) => (
                       <div key={product._id} className='row gy-3 mb-4'>
-                        <div className='col-lg-5'>
+                        <div className='col-lg-4'>
                           <div className='me-lg-5'>
                             <div className='d-flex'>
                               <img
@@ -41,15 +47,43 @@ const Cart = () => {
                             </div>
                           </div>
                         </div>
-                        <div className='col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap'>
-                          <div className='px-3'>
-                            <input type='text' value={product.qty} disabled />
+                        <div className='col-lg-4 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap'>
+                          <div className='px-1'>
+                            <div class='input-group mb-3'>
+                              <span
+                                class='input-group-text'
+                                id='basic-addon1'
+                                onClick={() => {
+                                  decrementCart(product);
+                                }}
+                              >
+                                -
+                              </span>
+                              <input
+                                type='text'
+                                value={product.qty}
+                                disabled
+                                class='form-control text-center'
+                                placeholder='Username'
+                                aria-label='Username'
+                                aria-describedby='basic-addon1'
+                              ></input>
+
+                              <span
+                                class='input-group-text'
+                                id='basic-addon1'
+                                onClick={() => {
+                                  incrementCart(product);
+                                }}
+                              >
+                                +
+                              </span>
+                            </div>
                           </div>
                           <div className=''>
                             <h6 className='h6'>
                               {product.price * product.qty}
                             </h6>{' '}
-                            <br />
                             <small className='text-muted text-nowrap'>
                               {' '}
                               {product.price} / per item{' '}
@@ -124,7 +158,7 @@ const Cart = () => {
                   </div>
 
                   <div className='mt-3'>
-                    <NavLink to={`/checkout`}>
+                    <NavLink to={cartList.length ? `/checkout` : ''}>
                       <button className='btn btn-primary w-100 shadow-0 mb-2'>
                         {' '}
                         Checkout{' '}

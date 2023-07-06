@@ -8,7 +8,7 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartList, setCartList] = useState([]);
-  const encodedToken = localStorage.getItem('token');
+  const encodedToken = sessionStorage.getItem('token');
   const [getCartTotals, setGetCartTotals] = useState({
     totalPrice: '',
     tax: '',
@@ -42,7 +42,7 @@ export const CartProvider = ({ children }) => {
 
   const addToCartHandler = (product) => {
     console.log(product);
-    if (localStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
       if (cartList.find((item) => item._id === product._id)) {
         navigate('/cart');
       } else {
@@ -51,7 +51,6 @@ export const CartProvider = ({ children }) => {
       }
     } else {
       toaster('ERROR', 'Please Login to add to cart');
-      navigate('/login');
     }
   };
 
@@ -94,6 +93,23 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // Increment Cart
+  const decrementCart = async ({ _id: productId }) => {
+    try {
+      const response = await axios.post(
+        `/api/user/cart/${productId}`,
+        { action: { type: 'decrement' } },
+        {
+          headers: { authorization: encodedToken },
+        }
+      );
+      setCartList(response.data.cart);
+      console.log(cartList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // Delete Cart
   const deleteCart = async (product) => {
     try {
@@ -118,6 +134,7 @@ export const CartProvider = ({ children }) => {
         incrementCart,
         addToCartHandler,
         getCartTotals,
+        decrementCart,
       }}
     >
       {children}

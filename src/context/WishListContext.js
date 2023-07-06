@@ -1,17 +1,19 @@
 import axios from 'axios';
 import { createContext, useState } from 'react';
 import toaster from './Toaster';
+import { useNavigate } from 'react-router-dom';
 
 export const WishListContext = createContext();
 
 export const WishListProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [wishList, setWishList] = useState([]);
 
   // Fetching Inital Cart Details
   const fetchWishList = async () => {
     try {
       const response = await axios.get('/api/user/wishlist', {
-        headers: { authorization: localStorage.getItem('token') },
+        headers: { authorization: sessionStorage.getItem('token') },
       });
       setWishList(response.data.wishlist);
     } catch (err) {
@@ -21,13 +23,17 @@ export const WishListProvider = ({ children }) => {
 
   // Add to WishList
   const addWishList = async (product) => {
-    if (localStorage.getItem('token')) {
+    if (wishList.find((item) => item._id === product._id)) {
+      navigate('/wishlist');
+      return;
+    }
+    if (sessionStorage.getItem('token')) {
       try {
         const response = await axios.post(
           '/api/user/wishlist',
           { product },
           {
-            headers: { authorization: localStorage.getItem('token') },
+            headers: { authorization: sessionStorage.getItem('token') },
           }
         );
         setWishList(response.data.wishlist);
@@ -47,7 +53,7 @@ export const WishListProvider = ({ children }) => {
   const deleteWishList = async (product) => {
     try {
       const response = await axios.delete(`/api/user/wishlist/${product._id}`, {
-        headers: { authorization: localStorage.getItem('token') },
+        headers: { authorization: sessionStorage.getItem('token') },
       });
       console.log(response);
       setWishList(response.data.wishlist);

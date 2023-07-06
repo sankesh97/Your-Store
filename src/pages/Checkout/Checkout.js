@@ -1,12 +1,13 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
-import { Link, NavLink } from 'react-router-dom';
-import { AuthContext } from '../../context/AppContext';
+import { Link } from 'react-router-dom';
+import { CheckoutContext } from '../../context/CheckoutContext';
 
 const Checkout = () => {
-  const { fetchCartDetails, cartList, deleteCart, getCartTotals } =
-    useContext(CartContext);
-  const { loggedInUser } = useContext(AuthContext);
+  const { fetchCartDetails, cartList, getCartTotals } = useContext(CartContext);
+  const { checkOutHandler } = useContext(CheckoutContext);
+  const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+  const [currentAddress, setCurrentAddress] = useState();
 
   useEffect(() => {
     fetchCartDetails();
@@ -28,6 +29,8 @@ const Checkout = () => {
                       <input
                         type='text'
                         id='typeText'
+                        readOnly
+                        disabled
                         value={loggedInUser.firstName}
                         placeholder='Type here'
                         className='form-control'
@@ -41,6 +44,8 @@ const Checkout = () => {
                       <input
                         type='text'
                         id='typeText'
+                        readOnly
+                        disabled
                         value={loggedInUser.lastName}
                         placeholder='Type here'
                         className='form-control'
@@ -48,24 +53,14 @@ const Checkout = () => {
                     </div>
                   </div>
 
-                  <div className='col-6 mb-3'>
-                    <p className='mb-0'>Phone</p>
-                    <div className='form-outline'>
-                      <input
-                        type='tel'
-                        id='typePhone'
-                        value='+91 '
-                        className='form-control'
-                      />
-                    </div>
-                  </div>
-
-                  <div className='col-6 mb-3'>
+                  <div className='col-12 mb-3'>
                     <p className='mb-0'>Email</p>
                     <div className='form-outline'>
                       <input
                         type='email'
                         id='typeEmail'
+                        readOnly
+                        disabled
                         value={loggedInUser.email}
                         placeholder='example@gmail.com'
                         className='form-control'
@@ -79,158 +74,52 @@ const Checkout = () => {
                 <h5 className='card-title mb-3'>Shipping info</h5>
 
                 <div className='row mb-3'>
-                  <div className='col-lg-4 mb-3'>
-                    {/* <!-- Default checked radio --> */}
-                    <div className='form-check h-100 border rounded-3'>
-                      <div className='p-3'>
-                        <input
-                          className='form-check-input'
-                          type='radio'
-                          name='flexRadioDefault'
-                          id='flexRadioDefault1'
-                        />
-                        <label
-                          className='form-check-label'
-                          htmlFor='flexRadioDefault1'
-                        >
-                          Express Shipping <br />
-                          <small className='text-muted'>
-                            Next - Day Delivery{' '}
-                          </small>
-                        </label>
+                  {loggedInUser.address.map((address) => {
+                    return (
+                      <div className='col-lg-4 mb-3'>
+                        <div className='form-check h-100 border rounded-3'>
+                          <div className='p-3'>
+                            <input
+                              className='form-check-input'
+                              type='radio'
+                              name='flexRadioDefault'
+                              value={address}
+                              onChange={() => {
+                                setCurrentAddress(address);
+                              }}
+                              id='flexRadioDefault2'
+                            />
+                            <label
+                              className='form-check-label'
+                              htmlFor='flexRadioDefault2'
+                            >
+                              {address.streetAddress} <br />
+                              House No. {address.house}
+                              <br />
+                              {address.city} - {address.postal}
+                              <br />
+                              Phone no. {address.phone}
+                            </label>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className='col-lg-4 mb-3'>
-                    {/* <!-- Default radio --> */}
-                    <div className='form-check h-100 border rounded-3'>
-                      <div className='p-3'>
-                        <input
-                          className='form-check-input'
-                          type='radio'
-                          name='flexRadioDefault'
-                          id='flexRadioDefault2'
-                        />
-                        <label
-                          className='form-check-label'
-                          htmlFor='flexRadioDefault2'
-                        >
-                          Regular Shipping <br />
-                          <small className='text-muted'>3-4 days </small>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='col-lg-4 mb-3'>
-                    {/* <!-- Default radio --> */}
-                    <div className='form-check h-100 border rounded-3'>
-                      <div className='p-3'>
-                        <input
-                          className='form-check-input'
-                          type='radio'
-                          name='flexRadioDefault'
-                          id='flexRadioDefault3'
-                        />
-                        <label
-                          className='form-check-label'
-                          htmlFor='flexRadioDefault3'
-                        >
-                          Self pick-up <br />
-                          <small className='text-muted'>
-                            Come to our shop{' '}
-                          </small>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='col-sm-8 mb-3'>
-                    <p className='mb-0'>Address</p>
-                    <div className='form-outline'>
-                      <input
-                        type='text'
-                        id='typeText'
-                        placeholder='Type here'
-                        className='form-control'
-                      />
-                    </div>
-                  </div>
-
-                  <div className='col-sm-4 mb-3'>
-                    <p className='mb-0'>City</p>
-                    <select className='form-select'>
-                      <option value='1'>New York</option>
-                      <option value='2'>Moscow</option>
-                      <option value='3'>Samarqand</option>
-                    </select>
-                  </div>
-
-                  <div className='col-sm-4 mb-3'>
-                    <p className='mb-0'>House</p>
-                    <div className='form-outline'>
-                      <input
-                        type='text'
-                        id='typeText'
-                        placeholder='Type here'
-                        className='form-control'
-                      />
-                    </div>
-                  </div>
-
-                  <div className='col-sm-4 col-6 mb-3'>
-                    <p className='mb-0'>Postal code</p>
-                    <div className='form-outline'>
-                      <input
-                        type='text'
-                        id='typeText'
-                        className='form-control'
-                      />
-                    </div>
-                  </div>
-
-                  <div className='col-sm-4 col-6 mb-3'>
-                    <p className='mb-0'>Zip</p>
-                    <div className='form-outline'>
-                      <input
-                        type='text'
-                        id='typeText'
-                        className='form-control'
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className='form-check mb-3'>
-                  <input
-                    className='form-check-input'
-                    type='checkbox'
-                    value=''
-                    id='flexCheckDefault1'
-                  />
-                  <label
-                    className='form-check-label'
-                    htmlFor='flexCheckDefault1'
-                  >
-                    Save this address
-                  </label>
-                </div>
-
-                <div className='mb-3'>
-                  <p className='mb-0'>Message to seller</p>
-                  <div className='form-outline'>
-                    <textarea
-                      className='form-control'
-                      id='textAreaExample1'
-                      rows='2'
-                    ></textarea>
-                  </div>
+                    );
+                  })}
                 </div>
 
                 <div className='float-end'>
                   <button className='btn btn-light border'>Cancel</button>
-                  <button className='btn btn-success shadow-0 border'>
+                  <button
+                    onClick={() => {
+                      checkOutHandler(
+                        loggedInUser,
+                        cartList,
+                        currentAddress,
+                        getCartTotals
+                      );
+                    }}
+                    className='btn btn-primary shadow-0 border'
+                  >
                     Continue
                   </button>
                 </div>
@@ -271,18 +160,6 @@ const Checkout = () => {
                     ? getCartTotals.totalPrice.toLocaleString('en-IN')
                     : '0'}
                 </p>
-              </div>
-
-              <div className='input-group mt-3 mb-4'>
-                <input
-                  type='text'
-                  className='form-control border'
-                  name=''
-                  placeholder='Promo code'
-                />
-                <button className='btn btn-light text-primary border'>
-                  Apply
-                </button>
               </div>
 
               <hr />

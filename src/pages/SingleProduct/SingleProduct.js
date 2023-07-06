@@ -1,12 +1,17 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ProductContext, WishListContext } from '../../context/AppContext';
+import {
+  CartContext,
+  ProductContext,
+  WishListContext,
+} from '../../context/AppContext';
 
 const SingleProduct = () => {
   const { productId } = useParams();
   const { fetchAProduct, currentProduct } = useContext(ProductContext);
-  const { addWishList } = useContext(WishListContext);
-  const quantity = useRef(1);
+  const { cartList, addToCartHandler } = useContext(CartContext);
+  const { addWishList, wishList } = useContext(WishListContext);
+
   useEffect(() => {
     fetchAProduct(productId);
   }, []);
@@ -33,21 +38,6 @@ const SingleProduct = () => {
                 <p>{currentProduct.description}</p>
                 <h2>&#8377; {currentProduct.price}</h2>
 
-                <div className='input-group my-5'>
-                  <button className='btn btn-outline-dark' type='button'>
-                    -
-                  </button>
-                  <input
-                    type='text'
-                    className='form-control'
-                    placeholder='Quanitity'
-                    ref={quantity}
-                  />
-
-                  <button className='btn btn-outline-dark' type='button'>
-                    +
-                  </button>
-                </div>
                 <div className='input-group'>
                   <button
                     className='btn btn-outline-dark'
@@ -57,12 +47,25 @@ const SingleProduct = () => {
                   >
                     <i className='bi bi-person-heart fs-4'></i>
                     <br />
-                    Add to Wish List
+                    {wishList.find((item) => item._id === currentProduct._id)
+                      ? 'Go to Wishlist'
+                      : 'Add to Wish List'}
                   </button>
-                  <button className='btn btn-outline-dark'>
+                  <button
+                    onClick={() => {
+                      addToCartHandler(currentProduct);
+                    }}
+                    className='btn btn-outline-dark'
+                  >
                     <i className='bi bi-bag fs-4'></i>
                     <br />
-                    Add to Cart
+                    {cartList.find(
+                      (item) => item._id === currentProduct._id
+                    ) ? (
+                      'Go to Cart'
+                    ) : (
+                      <>Add to Cart</>
+                    )}
                   </button>
                 </div>
               </div>
