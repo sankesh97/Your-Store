@@ -92,47 +92,48 @@ const Account = () => {
 
                 <h5 className='card-title mb-3'>Address</h5>
                 <div className='row mb-3'>
-                  {loggedInUser.address.map((address) => (
-                    <div key={address.id} className='col-lg-4 mb-3 card'>
-                      <div className='card-body'>
-                        <p>
-                          <strong>Street Address:</strong>{' '}
-                          {address.streetAddress}
-                        </p>
-                        <p>
-                          <strong>House/Flat No:</strong> {address.house}
-                        </p>
-                        <p>
-                          <strong>City:</strong>
-                          {address.city}
-                        </p>
-                        <p>
-                          <strong>Postal Code:</strong>
-                          {address.postal}
-                        </p>
-                        <p>
-                          <strong>Phone Number:</strong>
-                          {address.phone}
-                        </p>
-                        <button
-                          className='btn btn-primary'
-                          onClick={() => {
-                            console.log(address.id);
-                            setCurrentAddress({
-                              id: address.id,
-                              streetAddress: address.streetAddress,
-                              city: address.city,
-                              house: address.house,
-                              postal: address.postal,
-                              phone: address.phone,
-                            });
-                          }}
-                        >
-                          Edit Address
-                        </button>
+                  {loggedInUser.address &&
+                    loggedInUser.address.map((address) => (
+                      <div key={address.id} className='col-lg-4 mb-3 card'>
+                        <div className='card-body'>
+                          <p>
+                            <strong>Street Address:</strong>{' '}
+                            {address.streetAddress}
+                          </p>
+                          <p>
+                            <strong>House/Flat No:</strong> {address.house}
+                          </p>
+                          <p>
+                            <strong>City:</strong>
+                            {address.city}
+                          </p>
+                          <p>
+                            <strong>Postal Code:</strong>
+                            {address.postal}
+                          </p>
+                          <p>
+                            <strong>Phone Number:</strong>
+                            {address.phone}
+                          </p>
+                          <button
+                            className='btn btn-primary'
+                            onClick={() => {
+                              console.log(address.id);
+                              setCurrentAddress({
+                                id: address.id,
+                                streetAddress: address.streetAddress,
+                                city: address.city,
+                                house: address.house,
+                                postal: address.postal,
+                                phone: address.phone,
+                              });
+                            }}
+                          >
+                            Edit Address
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                   <div className='col-lg-4 mb-3 d-flex justify-content-center align-items-center'>
                     <i
                       onClick={() => {

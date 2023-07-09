@@ -104,6 +104,7 @@ export const CartProvider = ({ children }) => {
         }
       );
       setCartList(response.data.cart);
+      getTotal(response.data.cart);
       console.log(cartList);
     } catch (err) {
       console.log(err);

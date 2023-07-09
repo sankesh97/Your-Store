@@ -12,7 +12,14 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const registerHandler = async (firstName, lastName, email, password) => {
+  const registerHandler = async (
+    event,
+    firstName,
+    lastName,
+    email,
+    password
+  ) => {
+    event.preventDefault();
     try {
       const response = await axios.post(`/api/auth/signup`, {
         firstName,
@@ -20,10 +27,11 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
+      console.log(response);
       setLoggedInUser(response.data.foundUser);
       sessionStorage.setItem('token', response.data.encodedToken);
-      sessionStorage.setItem('user', response.data.foundUser);
-      navigate(location?.state?.from?.pathname);
+      sessionStorage.setItem('user', JSON.stringify(response.data.createdUser));
+      navigate('/products');
       toaster('SUCCESS', "You've Been Registered Successfully");
     } catch (error) {
       console.log(error);
@@ -56,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     console.log(currentAddress);
     setLoggedInUser(() => {
       const temp = { ...JSON.parse(sessionStorage.getItem('user')) };
-      const tempAddress = [...temp.address];
+      const tempAddress = temp.address ? [...temp.address] : [];
       if (currentAddress.id.length) {
         sessionStorage.setItem(
           'user',

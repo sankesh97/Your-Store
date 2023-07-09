@@ -47,7 +47,7 @@ const Cart = () => {
                             </div>
                           </div>
                         </div>
-                        <div className='col-lg-4 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap'>
+                        <div className='col-lg-4 col-sm-6 col-6 d-flex  flex-row flex-lg-column flex-xl-row text-nowrap'>
                           <div className='px-1'>
                             <div class='input-group mb-3'>
                               <span
@@ -80,14 +80,13 @@ const Cart = () => {
                               </span>
                             </div>
                           </div>
-                          <div className=''>
-                            <h6 className='h6'>
-                              {product.price * product.qty}
+                          <div className='m-2'>
+                            <h6>
+                              Rs.{' '}
+                              {(product.price * product.qty).toLocaleString(
+                                'en-IN'
+                              )}
                             </h6>{' '}
-                            <small className='text-muted text-nowrap'>
-                              {' '}
-                              {product.price} / per item{' '}
-                            </small>
                           </div>
                         </div>
                         <div className='col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2'>
@@ -96,7 +95,7 @@ const Cart = () => {
                               href='#!'
                               className='btn btn-light border px-2 icon-hover-primary'
                             >
-                              <i className='bi bi-heart fa-lg px-1 text-secondary'></i>
+                              Move to Cart
                             </a>
                             <span
                               onClick={() => {

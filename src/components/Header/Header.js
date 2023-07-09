@@ -1,11 +1,15 @@
 import { NavLink } from 'react-router-dom';
 
 import logo from '../../assets/your-Electronics-Logo.png';
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AppContext';
+import { useContext, useEffect } from 'react';
+import { AuthContext, ProductContext } from '../../context/AppContext';
 
 const Header = () => {
   const { logoutHandler } = useContext(AuthContext);
+  const { fetchProducts, productList } = useContext(ProductContext);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   return (
     <>
       <header>
@@ -32,14 +36,20 @@ const Header = () => {
             >
               <form className='d-flex mx-auto' role='search'>
                 <input
-                  className='form-control me-2'
-                  type='search'
-                  placeholder='Search'
-                  aria-label='Search'
+                  list='productListSearch'
+                  id='productListInput'
+                  name='product-list-search'
+                  onClick={() => {
+                    console.log('Hello');
+                  }}
                 />
-                <button className='btn btn-light' type='submit'>
-                  Search
-                </button>
+                <datalist id='productListSearch'>
+                  {productList
+                    ? productList.map((item) => (
+                        <option key={item._id} value={item.title} />
+                      ))
+                    : ''}
+                </datalist>
               </form>
             </div>
             <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
