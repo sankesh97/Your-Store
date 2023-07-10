@@ -42,16 +42,15 @@ const Cart = () => {
                                 <NavLink to={`/products/${product._id}`}>
                                   {product.title}
                                 </NavLink>
-                                <p className='text-muted'>{product.title}</p>
                               </div>
                             </div>
                           </div>
                         </div>
                         <div className='col-lg-4 col-sm-6 col-6 d-flex  flex-row flex-lg-column flex-xl-row text-nowrap'>
                           <div className='px-1'>
-                            <div class='input-group mb-3'>
+                            <div className='input-group mb-3'>
                               <span
-                                class='input-group-text'
+                                className='input-group-text'
                                 id='basic-addon1'
                                 onClick={() => {
                                   decrementCart(product);
@@ -63,14 +62,14 @@ const Cart = () => {
                                 type='text'
                                 value={product.qty}
                                 disabled
-                                class='form-control text-center'
+                                className='form-control text-center'
                                 placeholder='Username'
                                 aria-label='Username'
                                 aria-describedby='basic-addon1'
                               ></input>
 
                               <span
-                                class='input-group-text'
+                                className='input-group-text'
                                 id='basic-addon1'
                                 onClick={() => {
                                   incrementCart(product);
@@ -165,7 +164,7 @@ const Cart = () => {
                     </NavLink>
                     <NavLink to={`/products`}>
                       <button className='btn btn-primary w-100 shadow-0 mb-2'>
-                        <i class='bi bi-backspace'></i> Back to shop
+                        <i className='bi bi-backspace'></i> Back to shop
                       </button>{' '}
                     </NavLink>
                   </div>

@@ -1,12 +1,21 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
   const [currentProduct, setCurrentProduct] = useState([]);
   const [filteredProductList, setFilteredProductList] = useState([]);
+
+  const searchProduct = (name) => {
+    const product = productList.find(
+      (currentItem) => currentItem.title === name.split('-')[0].trim()
+    );
+    navigate(`/products/${product._id}`);
+  };
 
   const fetchProducts = async () => {
     try {
@@ -37,6 +46,7 @@ export const ProductProvider = ({ children }) => {
         filteredProductList,
         fetchAProduct,
         currentProduct,
+        searchProduct,
       }}
     >
       {children}

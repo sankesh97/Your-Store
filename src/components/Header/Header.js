@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { AutoComplete } from 'rsuite';
 
 import logo from '../../assets/your-Electronics-Logo.png';
 import { useContext, useEffect } from 'react';
@@ -6,7 +7,8 @@ import { AuthContext, ProductContext } from '../../context/AppContext';
 
 const Header = () => {
   const { logoutHandler } = useContext(AuthContext);
-  const { fetchProducts, productList } = useContext(ProductContext);
+  const { fetchProducts, productList, searchProduct } =
+    useContext(ProductContext);
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -35,21 +37,19 @@ const Header = () => {
               id='navbarSupportedContent'
             >
               <form className='d-flex mx-auto' role='search'>
-                <input
-                  list='productListSearch'
-                  id='productListInput'
-                  name='product-list-search'
-                  onClick={() => {
-                    console.log('Hello');
+                <AutoComplete
+                  onSelect={(event) => {
+                    searchProduct(event);
                   }}
+                  placeholder='Search for the Product'
+                  data={productList.map(
+                    (currentProduct) =>
+                      currentProduct.title +
+                      ' - Rs.' +
+                      currentProduct.price.toLocaleString('en-IN'),
+                    []
+                  )}
                 />
-                <datalist id='productListSearch'>
-                  {productList
-                    ? productList.map((item) => (
-                        <option key={item._id} value={item.title} />
-                      ))
-                    : ''}
-                </datalist>
               </form>
             </div>
             <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
