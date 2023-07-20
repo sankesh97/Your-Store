@@ -10,6 +10,7 @@ const Cart = () => {
     getCartTotals,
     incrementCart,
     decrementCart,
+    moveToWishlist,
   } = useContext(CartContext);
   useEffect(() => {
     fetchCartDetails();
@@ -90,12 +91,14 @@ const Cart = () => {
                         </div>
                         <div className='col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2'>
                           <div className='float-md-end'>
-                            <a
-                              href='#!'
+                            <span
+                              onClick={() => {
+                                moveToWishlist();
+                              }}
                               className='btn btn-light border px-2 icon-hover-primary'
                             >
-                              Move to Cart
-                            </a>
+                              Move to Wishlist
+                            </span>
                             <span
                               onClick={() => {
                                 deleteCart(product);

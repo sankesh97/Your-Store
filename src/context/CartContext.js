@@ -87,13 +87,14 @@ export const CartProvider = ({ children }) => {
         }
       );
       setCartList(response.data.cart);
+      getTotal(response.data.cart);
       console.log(cartList);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // Increment Cart
+  // Decrement Cart
   const decrementCart = async ({ _id: productId }) => {
     try {
       const response = await axios.post(
