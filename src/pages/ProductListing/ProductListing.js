@@ -12,7 +12,8 @@ const ProductListing = () => {
   const { categoriesSelection } = useParams();
 
   // Context Files
-  const { productList, fetchProducts } = useContext(ProductContext);
+  const { productList, fetchProducts, searchedProduct, setSearchedProduct } =
+    useContext(ProductContext);
   const { categoryList, fetchCategories } = useContext(CategoryContext);
   const { addToCartHandler, cartList } = useContext(CartContext);
   const { addWishList, wishList } = useContext(WishListContext);
@@ -38,6 +39,7 @@ const ProductListing = () => {
     setSortProduct('');
     setshowCategories([]);
     setRating(0);
+    setSearchedProduct();
     toaster('SUCCESS', 'Filters have been cleared');
   };
 
@@ -229,99 +231,110 @@ const ProductListing = () => {
           {/*<!-- content --> */}
           <div className='col-lg-9'>
             {productList ? (
-              productList
-                .sort((a, b) => {
-                  if (sortProduct === 'LTH') {
-                    return a.price - b.price;
-                  } else if (sortProduct === 'HTL') {
-                    return b.price - a.price;
-                  }
-                })
-                .filter((product) =>
-                  showCategories.length > 0
-                    ? showCategories.includes(product.category)
-                    : true
-                )
-                .filter((product) => product.rating >= rating)
-                .map((product) => (
-                  <div
-                    key={product._id}
-                    className='row justify-content-center mb-3'
-                  >
-                    <div className='col-md-12'>
-                      <div className='card shadow-0 border rounded-3'>
-                        <div className='card-body'>
-                          <div className='row g-0'>
-                            <div className='col-xl-3 col-md-4 d-flex justify-content-center'>
-                              <div className='bg-image hover-zoom ripple rounded ripple-surface me-md-3 mb-3 mb-md-0'>
-                                <NavLink to={`/products/${product._id}`}>
-                                  <img
-                                    src={product.imageURL}
-                                    alt={product.title}
-                                    className='w-100'
-                                  />
-                                </NavLink>
-                              </div>
-                            </div>
-                            <div className='col-xl-6 col-md-5 col-sm-7'>
-                              <NavLink to={`/products/${product._id}`}>
-                                <h5>{product.title}</h5>
-                              </NavLink>
-                              <div className='d-flex flex-row'>
-                                <div className='text-warning mb-1 me-2'>
-                                  <i className='bi bi-star'></i>
-                                  <span className='ms-1'>{product.rating}</span>
+              productList.length > 0 ? (
+                productList
+                  .sort((a, b) => {
+                    if (sortProduct === 'LTH') {
+                      return a.price - b.price;
+                    } else if (sortProduct === 'HTL') {
+                      return b.price - a.price;
+                    }
+                  })
+                  .filter((product) =>
+                    searchedProduct
+                      ? product.title.toLowerCase().includes(searchedProduct)
+                      : true
+                  )
+                  .filter((product) =>
+                    showCategories.length > 0
+                      ? showCategories.includes(product.category)
+                      : true
+                  )
+                  .filter((product) => product.rating >= rating)
+                  .map((product) => (
+                    <div
+                      key={product._id}
+                      className='row justify-content-center mb-3'
+                    >
+                      <div className='col-md-12'>
+                        <div className='card shadow-0 border rounded-3'>
+                          <div className='card-body'>
+                            <div className='row g-0'>
+                              <div className='col-xl-3 col-md-4 d-flex justify-content-center'>
+                                <div className='bg-image hover-zoom ripple rounded ripple-surface me-md-3 mb-3 mb-md-0'>
+                                  <NavLink to={`/products/${product._id}`}>
+                                    <img
+                                      src={product.imageURL}
+                                      alt={product.title}
+                                      className='w-100'
+                                    />
+                                  </NavLink>
                                 </div>
                               </div>
-
-                              <p className='text mb-4 mb-md-0'>
+                              <div className='col-xl-6 col-md-5 col-sm-7'>
                                 <NavLink to={`/products/${product._id}`}>
-                                  {product.description}
+                                  <h5>{product.title}</h5>
                                 </NavLink>
-                              </p>
-                            </div>
-                            <div className='col-xl-3 col-md-3 col-sm-5'>
-                              <div className='d-flex flex-row align-items-center mb-1'>
-                                <h4 className='mb-1 me-1'>
-                                  &#8377;{product.price}
-                                </h4>
+                                <div className='d-flex flex-row'>
+                                  <div className='text-warning mb-1 me-2'>
+                                    <i className='bi bi-star'></i>
+                                    <span className='ms-1'>
+                                      {product.rating}
+                                    </span>
+                                  </div>
+                                </div>
+
+                                <p className='text mb-4 mb-md-0'>
+                                  <NavLink to={`/products/${product._id}`}>
+                                    {product.description}
+                                  </NavLink>
+                                </p>
                               </div>
-                              <div className='mt-4'>
-                                <button
-                                  className='btn btn-primary shadow-0 mx-2'
-                                  type='button'
-                                  onClick={() => {
-                                    addToCartHandler(product);
-                                  }}
-                                >
-                                  {cartList.find(
-                                    ({ _id }) => _id === product._id
-                                  )
-                                    ? 'Go To Cart'
-                                    : 'Add To Cart'}
-                                </button>
-                                <span
-                                  onClick={() => {
-                                    addWishList(product);
-                                  }}
-                                  className='btn btn-light border mx-2 pt-2 icon-hover'
-                                >
-                                  {wishList.find(
-                                    ({ _id }) => _id === product._id
-                                  ) ? (
-                                    <i class='bi bi-heart-fill text-danger'></i>
-                                  ) : (
-                                    <i className='bi bi-heart px-1'></i>
-                                  )}
-                                </span>
+                              <div className='col-xl-3 col-md-3 col-sm-5'>
+                                <div className='d-flex flex-row align-items-center mb-1'>
+                                  <h4 className='mb-1 me-1'>
+                                    &#8377;{product.price}
+                                  </h4>
+                                </div>
+                                <div className='mt-4'>
+                                  <button
+                                    className='btn btn-primary shadow-0 mx-2'
+                                    type='button'
+                                    onClick={() => {
+                                      addToCartHandler(product);
+                                    }}
+                                  >
+                                    {cartList.find(
+                                      ({ _id }) => _id === product._id
+                                    )
+                                      ? 'Go To Cart'
+                                      : 'Add To Cart'}
+                                  </button>
+                                  <span
+                                    onClick={() => {
+                                      addWishList(product);
+                                    }}
+                                    className='btn btn-light border mx-2 pt-2 icon-hover'
+                                  >
+                                    {wishList.find(
+                                      ({ _id }) => _id === product._id
+                                    ) ? (
+                                      <i class='bi bi-heart-fill text-danger'></i>
+                                    ) : (
+                                      <i className='bi bi-heart px-1'></i>
+                                    )}
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  ))
+              ) : (
+                <p>No Products Found</p>
+              )
             ) : (
               <div className='spinner-border' role='status'>
                 <span className='visually-hidden'>Loading...</span>

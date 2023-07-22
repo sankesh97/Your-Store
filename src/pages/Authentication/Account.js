@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/AuthContext';
 const Account = () => {
   const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
   const { addressHandler } = useContext(AuthContext);
+  const [currentMessage, SetCurrentMessage] = useState();
   const [currentAddress, setCurrentAddress] = useState({
     id: '',
     streetAddress: '',
@@ -90,60 +91,69 @@ const Account = () => {
 
                 <hr className='my-4' />
 
-                <h5 className='card-title mb-3'>Address</h5>
-                <div className='row mb-3'>
+                <h5 className=' mb-3'>Address</h5>
+                <div className='row mb-3 g-2'>
                   {loggedInUser.address &&
                     loggedInUser.address.map((address) => (
-                      <div key={address.id} className='col-lg-4 mb-3 card'>
-                        <div className='card-body'>
-                          <p>
-                            <strong>Street Address:</strong>{' '}
-                            {address.streetAddress}
-                          </p>
-                          <p>
-                            <strong>House/Flat No:</strong> {address.house}
-                          </p>
-                          <p>
-                            <strong>City:</strong>
-                            {address.city}
-                          </p>
-                          <p>
-                            <strong>Postal Code:</strong>
-                            {address.postal}
-                          </p>
-                          <p>
-                            <strong>Phone Number:</strong>
-                            {address.phone}
-                          </p>
-                          <button
-                            className='btn btn-primary'
-                            onClick={() => {
-                              console.log(address.id);
-                              setCurrentAddress({
-                                id: address.id,
-                                streetAddress: address.streetAddress,
-                                city: address.city,
-                                house: address.house,
-                                postal: address.postal,
-                                phone: address.phone,
-                              });
-                            }}
-                          >
-                            Edit Address
-                          </button>
+                      <div key={address.id} className='col-lg-4 mb-3'>
+                        <div className='card'>
+                          <div className='card-body'>
+                            <p>
+                              <strong>Street Address:</strong>{' '}
+                              {address.streetAddress}
+                            </p>
+                            <p>
+                              <strong>House/Flat No:</strong> {address.house}
+                            </p>
+                            <p>
+                              <strong>City:</strong>
+                              {address.city}
+                            </p>
+                            <p>
+                              <strong>Postal Code:</strong>
+                              {address.postal}
+                            </p>
+                            <p>
+                              <strong>Phone Number:</strong>
+                              {address.phone}
+                            </p>
+                            <button
+                              className='btn btn-primary'
+                              onClick={() => {
+                                SetCurrentMessage('Edit Address');
+                                setCurrentAddress({
+                                  id: address.id,
+                                  streetAddress: address.streetAddress,
+                                  city: address.city,
+                                  house: address.house,
+                                  postal: address.postal,
+                                  phone: address.phone,
+                                });
+                              }}
+                            >
+                              Edit Address
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ))}
-                  <div className='col-lg-4 mb-3 d-flex justify-content-center align-items-center'>
+                  <div className='col-lg-4 mb-3 d-flex flex-column justify-content-center align-items-center'>
                     <i
                       onClick={() => {
                         clearForm();
+                        SetCurrentMessage('Add New Address');
                       }}
                       className='bi bi-plus-circle fs-3'
                     ></i>
+                    <p>Add New Address</p>
                   </div>
                 </div>
-
+                <br />
+                <h4>
+                  {currentMessage === 'Edit Address'
+                    ? 'Edit Address'
+                    : 'Add New Address'}
+                </h4>
                 <div className='row'>
                   <div className='col-sm-8 mb-3'>
                     <p className='mb-0'>Address</p>

@@ -1,7 +1,8 @@
-import axios from 'axios';
 import { createContext, useState } from 'react';
-import toaster from './Toaster';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+import toaster from './Toaster';
 
 export const WishListContext = createContext();
 

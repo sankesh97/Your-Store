@@ -1,20 +1,20 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [productList, setProductList] = useState([]);
   const [currentProduct, setCurrentProduct] = useState([]);
   const [filteredProductList, setFilteredProductList] = useState([]);
+  const [searchedProduct, setSearchedProduct] = useState();
 
-  const searchProduct = (name) => {
-    const product = productList.find(
-      (currentItem) => currentItem.title === name.split('-')[0].trim()
-    );
-    navigate(`/products/${product._id}`);
+  const searchProduct = (productName) => {
+    if (location.pathname !== '/products') navigate('/products');
+    setSearchedProduct(productName);
   };
 
   const fetchProducts = async () => {
@@ -47,6 +47,8 @@ export const ProductProvider = ({ children }) => {
         fetchAProduct,
         currentProduct,
         searchProduct,
+        searchedProduct,
+        setSearchedProduct,
       }}
     >
       {children}
