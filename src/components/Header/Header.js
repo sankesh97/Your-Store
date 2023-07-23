@@ -50,15 +50,13 @@ const Header = () => {
                 <i className='bi bi-bag fs-4 mx-2'></i>
               </NavLink>
 
-              <button className='nav-item btn btn-primary'>
-                {sessionStorage.getItem('token') ? (
+              {sessionStorage.getItem('token') ? (
+                <button className='nav-item btn btn-primary'>
                   <span onClick={() => logoutHandler()}>Logout</span>
-                ) : (
-                  <NavLink className='text-white' to='/login'>
-                    Login/Register
-                  </NavLink>
-                )}
-              </button>
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </nav>

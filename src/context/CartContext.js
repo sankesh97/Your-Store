@@ -87,6 +87,7 @@ export const CartProvider = ({ children }) => {
       );
       setCartList(response.data.cart);
       getTotal(response.data.cart);
+      toaster('SUCCESS', 'Quantity of the product has been increased');
     } catch (err) {
       toaster('ERROR', err.response.data.errors[0]);
     }
@@ -104,6 +105,7 @@ export const CartProvider = ({ children }) => {
       );
       setCartList(response.data.cart);
       getTotal(response.data.cart);
+      toaster('SUCCESS', 'Quantity of the product has been decreased');
     } catch (err) {
       toaster('ERROR', err.response.data.errors[0]);
     }

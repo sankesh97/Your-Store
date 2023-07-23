@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { CartContext } from '../../context/AppContext';
+import { CartContext, WishListContext } from '../../context/AppContext';
 import { NavLink } from 'react-router-dom';
 
 const Cart = () => {
@@ -10,8 +10,8 @@ const Cart = () => {
     getCartTotals,
     incrementCart,
     decrementCart,
-    moveToWishlist,
   } = useContext(CartContext);
+  const { addWishList } = useContext(WishListContext);
   useEffect(() => {
     fetchCartDetails();
   }, []);
@@ -93,9 +93,10 @@ const Cart = () => {
                           <div className='float-md-end'>
                             <span
                               onClick={() => {
-                                moveToWishlist();
+                                deleteCart(product);
+                                addWishList(product);
                               }}
-                              className='btn btn-light border px-2 icon-hover-primary'
+                              className='btn btn-light border px-2 icon-hover-primary mx-2'
                             >
                               Move to Wishlist
                             </span>

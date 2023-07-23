@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 const WishList = () => {
   const { fetchWishList, wishList, deleteWishList } =
     useContext(WishListContext);
-  const { addToCartHandler } = useContext(CartContext);
+  const { incrementCart, cartList, addToCart } = useContext(CartContext);
 
   useEffect(() => {
     fetchWishList();
@@ -47,9 +47,11 @@ const WishList = () => {
                     <div className='col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2'>
                       <div className='float-md-end g-2'>
                         <span
-                          className='btn btn-light border px-2 icon-hover-primary'
+                          className='btn btn-light border px-2 icon-hover-primary mx-2'
                           onClick={() => {
-                            addToCartHandler(product);
+                            cartList.find((prod) => prod._id === product._id)
+                              ? incrementCart(product)
+                              : addToCart(product);
                           }}
                         >
                           Add to Cart

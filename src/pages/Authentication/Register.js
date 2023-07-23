@@ -65,7 +65,6 @@ const Register = () => {
               placeholder='Enter your Email'
               required
             />
-            <div id='emailHelp' className='form-text'></div>
           </div>
 
           <div className='mb-3'>

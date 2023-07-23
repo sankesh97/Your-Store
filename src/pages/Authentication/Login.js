@@ -47,8 +47,17 @@ const Login = () => {
               ref={password}
             />
           </div>
-          <button type='submit' className='btn btn-primary'>
+          <button type='submit' className='btn btn-primary me-2'>
             Submit
+          </button>
+          <button
+            type='button'
+            onClick={(event) => {
+              loginHandler(event, 'sankeshjain8497@gmail.com', 'sankesh97');
+            }}
+            className='btn btn-primary'
+          >
+            Login as a Guest
           </button>
         </form>
         <br />

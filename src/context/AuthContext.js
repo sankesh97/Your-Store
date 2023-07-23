@@ -44,9 +44,7 @@ export const AuthProvider = ({ children }) => {
       setEncodedToken(response.data.encodedToken);
       sessionStorage.setItem('user', JSON.stringify(response.data.foundUser));
       sessionStorage.setItem('token', response.data.encodedToken);
-      location?.state?.from?.pathname === '/login'
-        ? navigate(location?.state?.from?.pathname)
-        : navigate('/account');
+      navigate(location?.state?.from?.pathname);
       toaster('SUCCESS', "You've Been Logged In Successfully");
     } catch (err) {
       toaster('ERROR', err.response.data.errors[0]);
