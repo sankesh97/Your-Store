@@ -12,12 +12,10 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  //Register Handler
   const registerHandler = async (
     event,
-    firstName,
-    lastName,
-    email,
-    password
+    { firstName, lastName, email, password }
   ) => {
     event.preventDefault();
     try {
@@ -27,17 +25,17 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      console.log(response);
       setLoggedInUser(response.data.foundUser);
       sessionStorage.setItem('token', response.data.encodedToken);
       sessionStorage.setItem('user', JSON.stringify(response.data.createdUser));
       navigate('/products');
       toaster('SUCCESS', "You've Been Registered Successfully");
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      toaster('ERROR', err.response.data.errors[0]);
     }
   };
 
+  //Login Handler
   const loginHandler = async (event, email, password) => {
     event.preventDefault();
     try {
@@ -46,13 +44,16 @@ export const AuthProvider = ({ children }) => {
       setEncodedToken(response.data.encodedToken);
       sessionStorage.setItem('user', JSON.stringify(response.data.foundUser));
       sessionStorage.setItem('token', response.data.encodedToken);
-      navigate(location?.state?.from?.pathname);
+      location?.state?.from?.pathname === '/login'
+        ? navigate(location?.state?.from?.pathname)
+        : navigate('/account');
       toaster('SUCCESS', "You've Been Logged In Successfully");
     } catch (err) {
-      console.log(err.response);
+      toaster('ERROR', err.response.data.errors[0]);
     }
   };
 
+  //Logout Handler
   const logoutHandler = () => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
@@ -60,8 +61,8 @@ export const AuthProvider = ({ children }) => {
     toaster('SUCCESS', "You've Been Logged Out Successfully");
   };
 
+  //Address Handler
   const addressHandler = (currentAddress) => {
-    console.log(currentAddress);
     setLoggedInUser(() => {
       const temp = { ...JSON.parse(sessionStorage.getItem('user')) };
       const tempAddress = temp.address ? [...temp.address] : [];

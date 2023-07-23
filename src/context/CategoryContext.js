@@ -1,6 +1,8 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
 
+import toaster from './Toaster';
+
 export const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
@@ -11,7 +13,7 @@ export const CategoryProvider = ({ children }) => {
       const response = await axios.get('/api/categories');
       setCategoryList(response.data.categories);
     } catch (err) {
-      console.log(err);
+      toaster('ERROR', err.response.data.errors[0]);
     }
   };
 

@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react';
-import toaster from './Toaster';
 import { useNavigate } from 'react-router-dom';
+
+import toaster from './Toaster';
 
 export const CheckoutContext = createContext();
 

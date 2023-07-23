@@ -23,6 +23,7 @@ const Login = () => {
             </label>
             <input
               type='email'
+              required
               className='form-control'
               id='loginEmail'
               ref={email}
@@ -41,6 +42,7 @@ const Login = () => {
               type='password'
               className='form-control'
               id='loginPassword'
+              required
               placeholder='Enter Your Password'
               ref={password}
             />

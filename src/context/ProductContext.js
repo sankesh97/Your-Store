@@ -12,11 +12,13 @@ export const ProductProvider = ({ children }) => {
   const [filteredProductList, setFilteredProductList] = useState([]);
   const [searchedProduct, setSearchedProduct] = useState();
 
+  //Search Product Setter
   const searchProduct = (productName) => {
     if (location.pathname !== '/products') navigate('/products');
     setSearchedProduct(productName);
   };
 
+  //Fetch the List of Products
   const fetchProducts = async () => {
     try {
       const response = await axios.get('/api/products');
@@ -27,6 +29,7 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  //Fetch a Single Product
   const fetchAProduct = async (productId) => {
     try {
       console.log(productId);

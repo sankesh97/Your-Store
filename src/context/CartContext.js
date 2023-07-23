@@ -36,12 +36,11 @@ export const CartProvider = ({ children }) => {
       setCartList(response.data.cart);
       getTotal(response.data.cart);
     } catch (err) {
-      console.log(err);
+      toaster('ERROR', err.response.data.errors[0]);
     }
   };
 
   const addToCartHandler = (product) => {
-    console.log(product);
     if (sessionStorage.getItem('token')) {
       if (cartList.find((item) => item._id === product._id)) {
         navigate('/cart');
@@ -69,7 +68,7 @@ export const CartProvider = ({ children }) => {
         );
         setCartList(response.data.cart);
       } catch (err) {
-        console.log(err);
+        toaster('ERROR', err.response.data.errors[0]);
       }
     } else {
       incrementCart(addedProduct);
@@ -88,9 +87,8 @@ export const CartProvider = ({ children }) => {
       );
       setCartList(response.data.cart);
       getTotal(response.data.cart);
-      console.log(cartList);
     } catch (err) {
-      console.log(err);
+      toaster('ERROR', err.response.data.errors[0]);
     }
   };
 
@@ -106,9 +104,8 @@ export const CartProvider = ({ children }) => {
       );
       setCartList(response.data.cart);
       getTotal(response.data.cart);
-      console.log(cartList);
     } catch (err) {
-      console.log(err);
+      toaster('ERROR', err.response.data.errors[0]);
     }
   };
 
@@ -122,7 +119,7 @@ export const CartProvider = ({ children }) => {
       setCartList(response.data.cart);
       getTotal(response.data.cart);
     } catch (err) {
-      console.log(err);
+      toaster('ERROR', err.response.data.errors[0]);
     }
   };
 

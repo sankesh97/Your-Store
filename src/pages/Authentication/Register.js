@@ -16,13 +16,12 @@ const Register = () => {
         <h3>Register</h3>
         <form
           onSubmit={(event) => {
-            registerHandler(
-              event,
-              email.current.value,
-              password.current.value,
-              firstName.current.value,
-              lastName.current.value
-            );
+            registerHandler(event, {
+              email: email.current.value,
+              password: password.current.value,
+              firstName: firstName.current.value,
+              lastName: lastName.current.value,
+            });
           }}
         >
           <div className='mb-3'>
@@ -60,7 +59,7 @@ const Register = () => {
             <input
               type='email'
               className='form-control'
-              id='loginEmail'
+              id='email'
               ref={email}
               aria-describedby='emailHelp'
               placeholder='Enter your Email'

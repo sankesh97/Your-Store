@@ -19,11 +19,12 @@ import Checkout from './pages/Checkout/Checkout';
 import WishList from './pages/WishList/WishList';
 import Login from './pages/Authentication/Login';
 import Register from './pages/Authentication/Register';
-import { ToastContainer } from 'react-toastify';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
-import { RequiresAuth } from './components/RequiresAuth';
 import Account from './pages/Authentication/Account';
 import OrderSummary from './pages/OrderSummary/OrderSummary';
+import FourOFour from './pages/FourOFour';
+import { ToastContainer } from 'react-toastify';
+import { RequiresAuth } from './components/RequiresAuth';
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
           />
           <Route path='/products/:productId' element={<SingleProduct />} />
           <Route path='/mockman' element={<MockAPI />} />
+          <Route path='*' element={<FourOFour />} />
         </Routes>
       </main>
       <footer>

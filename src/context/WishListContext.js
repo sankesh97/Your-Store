@@ -18,7 +18,7 @@ export const WishListProvider = ({ children }) => {
       });
       setWishList(response.data.wishlist);
     } catch (err) {
-      console.log(err.message);
+      toaster('ERROR', err.response.data.errors[0]);
     }
   };
 
@@ -43,7 +43,7 @@ export const WishListProvider = ({ children }) => {
           `${product.title} has been added to the Wishlist :)`
         );
       } catch (err) {
-        console.log(err);
+        toaster('ERROR', err.response.data.errors[0]);
       }
     } else {
       toaster('ERROR', 'Please Login to add the product to wishlist');
@@ -63,7 +63,7 @@ export const WishListProvider = ({ children }) => {
         `${product.title} has been removed from the wishlist `
       );
     } catch (err) {
-      console.log(err);
+      toaster('ERROR', err.response.data.errors[0]);
     }
   };
 

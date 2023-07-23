@@ -229,13 +229,13 @@ const Account = () => {
                   </div>
                 </div>
 
-                <div className='float-end'>
-                  <button className='btn btn-light border'>Cancel</button>
+                <div className='d-grid gap-2 d-md-block'>
+                  <button className='btn btn-light border mx-1'>Cancel</button>
                   <button
                     onClick={() => {
                       addressHandler(currentAddress);
                     }}
-                    className='btn btn-success shadow-0 border'
+                    className='btn btn-success shadow-0 border mx-1'
                   >
                     Add/Edit Address
                   </button>
