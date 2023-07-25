@@ -1,10 +1,11 @@
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../context/AppContext';
 import { NavLink } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 
 const Register = () => {
   const { registerHandler } = useContext(AuthContext);
+  const [showPass, setShowPass] = useState(false);
   const email = useRef('');
   const password = useRef('');
   const firstName = useRef('');
@@ -71,28 +72,58 @@ const Register = () => {
             <label htmlFor='loginPassword' className='form-label'>
               Password<span className='text-danger'>*</span>
             </label>
-            <input
-              type='password'
-              className='form-control'
-              id='loginPassword'
-              ref={password}
-              placeholder='Enter your password'
-              required
-            />
+            <div className='input-group'>
+              <input
+                type={showPass ? 'text' : 'password'}
+                className='form-control'
+                id='loginPassword'
+                ref={password}
+                placeholder='Enter your password'
+                required
+              />
+              <span
+                class='input-group-text'
+                onClick={() => {
+                  setShowPass(!showPass);
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                {showPass ? (
+                  <i class='bi bi-eye'></i>
+                ) : (
+                  <i class='bi bi-eye-slash'></i>
+                )}
+              </span>
+            </div>
           </div>
 
           <div className='mb-3'>
             <label htmlFor='loginPassword' className='form-label'>
               Confirm Password<span className='text-danger'>*</span>
             </label>
-            <input
-              type='password'
-              className='form-control'
-              id='confirmPassword'
-              placeholder='Confirm your password'
-              ref={password}
-              required
-            />
+            <div className='input-group'>
+              <input
+                type={showPass ? 'text' : 'password'}
+                className='form-control'
+                id='confirmPassword'
+                placeholder='Confirm your password'
+                ref={password}
+                required
+              />
+              <span
+                class='input-group-text'
+                onClick={() => {
+                  setShowPass(!showPass);
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                {showPass ? (
+                  <i class='bi bi-eye'></i>
+                ) : (
+                  <i class='bi bi-eye-slash'></i>
+                )}
+              </span>
+            </div>
           </div>
 
           <button type='submit' className='btn btn-primary'>
