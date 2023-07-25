@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
     event,
     { firstName, lastName, email, password }
   ) => {
-    event.preventDefault();
     try {
       const response = await axios.post(`/api/auth/signup`, {
         firstName,

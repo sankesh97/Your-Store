@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../context/AppContext';
 import { NavLink } from 'react-router-dom';
 import Card from '../../components/Card/Card';
+import toaster from '../../context/Toaster';
 
 const Register = () => {
   const { registerHandler } = useContext(AuthContext);
@@ -10,6 +11,7 @@ const Register = () => {
   const password = useRef('');
   const firstName = useRef('');
   const lastName = useRef('');
+  const confirmPassword = useRef('');
 
   return (
     <div className='d-flex align-items-center justify-content-center'>
@@ -17,12 +19,18 @@ const Register = () => {
         <h3>Register</h3>
         <form
           onSubmit={(event) => {
-            registerHandler(event, {
-              email: email.current.value,
-              password: password.current.value,
-              firstName: firstName.current.value,
-              lastName: lastName.current.value,
-            });
+            event.preventDefault();
+            confirmPassword.current.value === password.current.value
+              ? registerHandler(event, {
+                  email: email.current.value,
+                  password: password.current.value,
+                  firstName: firstName.current.value,
+                  lastName: lastName.current.value,
+                })
+              : toaster(
+                  'ERROR',
+                  'Please check the password and confirm password'
+                );
           }}
         >
           <div className='mb-3'>
@@ -107,7 +115,7 @@ const Register = () => {
                 className='form-control'
                 id='confirmPassword'
                 placeholder='Confirm your password'
-                ref={password}
+                ref={confirmPassword}
                 required
               />
               <span
